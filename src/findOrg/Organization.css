@@ -1,0 +1,184 @@
+.sideBarOrg{
+    background-color:rgb(0, 113, 93);
+    padding: 20px;
+}
+.orgPadge{
+     display: grid;
+    grid-template-columns: 600fr 0fr
+    
+}
+.containerTa{
+ min-width: 100%; 
+}
+.sidetext{
+
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    z-index: 20;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    
+
+}
+.sideimg{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sideimg img{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    &:hover{
+        transform: scale(1.05);
+    }
+}
+.a a{ 
+    text-decoration: none;
+    color:black;
+    padding:10px ;
+    font-weight: bold;
+}
+.a a:hover{
+    color:white;
+}
+.sidetextCon{
+    font-size: larger;
+    margin-top: 10px;
+    padding-bottom: 20px;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    border-bottom: 2px solid rgb(210, 210, 210) ;
+
+    @media (max-width: 900px){
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+}
+
+.contactInfo li{
+    display: flex;
+    align-items: center;
+}
+
+.contactInfo ul{
+    list-style:none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+
+    li{
+        margin-top: 5px;
+        color: rgb(210, 210, 210);
+    }
+
+
+    li a{
+        color: rgb(0, 0, 0);
+        text-decoration: none;
+    }
+
+    li a:hover{
+        color: rgb(92, 255, 157);
+    }
+
+
+}
+.contactInfo div{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    align-items: center;
+
+    a:hover{
+        color: rgb(92, 255, 157);
+    }
+
+}
+
+.SocialM {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.about{
+
+    padding:0 9px;
+  color: white;
+
+}
+
+.ourC{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 5px;
+    background-color:  rgb(210, 210, 210);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-weight: bold;
+}
+button{
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 5px;
+
+}
+
+.AccButton{
+    background-color: #1f5ff3;
+    color: white;
+}
+.AccButton1{
+    background-color: #1f5ff3;
+    color: white;
+}
+
+.AccButton:hover,.AccButton1:hover{
+    background-color: #123771;
+}
+
+.AccButton:active,.AccButton1:active{
+    background-color: #092352;
+}
+.DelButton1{
+    background-color: #ff3838;
+    color: white;
+    margin: 5px;
+    padding: 5px 10px;
+}
+.DelButton{
+    background-color: #ff3838;
+    color: white;
+}
+
+.DelButton:hover,.DelButton1:hover{
+    background-color: #c62828;
+}
+
+.DelButton:active,.DelButton1:active{
+    background-color: #8f1717;
+}

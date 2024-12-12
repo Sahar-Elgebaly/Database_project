@@ -1,0 +1,43 @@
+
+.loginCont{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    margin-top: 40px;
+    max-width: 1050px;
+    margin: 80px auto;
+    border-radius:80px ;
+    padding: 10px;
+    box-shadow: 1px 2px 2px 4px var(--secondary-color) ;
+}
+.loginimg{
+    max-width: 200px;
+}
+.loginv h1{
+    margin-bottom: 50px;
+}
+.loginv p{
+    margin:20px;
+    font-weight: bold;
+}
+.loginv  input{
+   display: block;
+   padding: 15px;
+   width: 80%;
+   margin: 20px;
+   border: 1px solid var(--secondary-color);
+   border-radius: 50px;
+}
+.loginv button{
+    margin: 20px; 
+    padding:8px 20px;
+    background-color:var(--secondary-color) ;
+    border:none;
+    border-radius:5px;
+    color:white;
+    font-size: 20px;
+    font-weight: bold;
+}

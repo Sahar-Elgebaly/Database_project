@@ -1,0 +1,246 @@
+:root {
+    --primary-color:  rgb(247, 247, 247);
+    --secondary-color: rgb(0, 113, 93); 
+    
+}
+.volunteerProf{
+ display: grid;
+ grid-template-columns: 4fr 1fr;
+ margin-top: 50px;
+ 
+
+    
+}
+.User{
+ 
+  text-align: center;
+  border-left: 2px solid black;
+  min-width: 350px;
+  background-color: rgb(0, 113, 93);
+  
+}
+.fixed{
+    overflow: hidden;
+}
+.search{
+    /* margin-top: 50px; */
+    padding: 20px;
+    text-align: center;
+    background-image:url(../images/subscribe.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    width: 100%;
+   
+}
+.search::before{
+    content: "";
+    background-color: rgb(0 0 0 / 60%);
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+   
+}
+.search input{
+    width: 400px;
+    height: 40px;
+    border:none;
+    padding: 5px;
+    margin: 20px;
+    border-radius:10px ;
+    background-color: white;
+    position: relative;
+}
+.search button{
+    background-color:  var(--secondary-color);
+    color:white;
+    border:none;
+    padding:10px;
+    border-radius:10px ;
+}
+.titleOpp{
+    display: flex;
+    text-align: left;
+    padding: 20px;
+    margin: 50px;
+    background-color: var(--primary-color);
+    border-radius: 40px 0 40px 0;
+    border:1px solid var(--secondary-color);
+    box-shadow: 0px 4px 15px 0px var(--secondary-color);
+    min-width: 900px;
+
+}
+.titleOpp h5{
+    transform: translateY(-20px);
+    color:gray;
+}
+.titleOpp p{
+    font-size: 22px;
+    
+}
+.no{
+    text-align: center;
+}
+.no p{
+    color:var(--secondary-color);
+    font-size: 25px;
+    font-weight: bold;
+}
+.donates{
+    margin: 5px;
+}
+.donor{
+    background-color: var(--primary-color);
+    padding: 10px;
+    margin: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    border:1px solid var(--secondary-color)
+}
+.donor p{
+    font-family: 'Courier New', Courier, monospace;
+    color:black;
+    font-weight: bold;
+}
+ .donates ,.More{
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 30px;
+    color:white;
+    cursor: pointer;
+    
+}
+.titles h1{
+    color:var(--secondary-color)
+}
+.right {
+    margin: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+.right h5{
+    color: var(--secondary-color);
+}
+.right p{
+    color:black;
+    font-size: 15px;
+    margin: 0;
+}
+.help-b{
+    text-align: center;
+   padding: 5px;
+    width: 100%;
+    border-radius: 5px;
+    border:none;
+    cursor: pointer;
+}
+.defPhoto{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.p{
+    border-bottom: 2px solid black;
+    padding: 10px;
+    margin:0 5px 0 15px;
+}
+.User a{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    color:black;
+
+}
+.User a:hover{
+    color: red;
+}
+.User p{
+    color: rgb(210, 210, 210);
+    font-weight: bold;
+}
+.User p span{
+    color:black;
+}
+.empty{
+  margin: auto;
+  font-weight: bold;
+  font-size: 50px;
+  border: 2px solid var(--secondary-color);
+  padding: 40px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 15px 0px var(--secondary-color);
+}
+.empty img{
+    width: 200px;
+}
+.opp{
+    background-color: var(--primary-color);
+    padding: 10px;
+    margin: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    border:1px solid var(--secondary-color);
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.opp img{
+   max-width: 280px;
+   margin: 0;
+
+}
+#setting{
+    animation: router 4s linear 0.5ms infinite forwards paused;
+    padding: 20px;
+  }
+  
+@keyframes router {
+      0% { transform: rotate(0deg);
+       } 100% { transform: rotate(360deg); }
+  }
+#setting:hover{
+  animation-play-state: running;
+}
+.a{
+    border: 1px solid black;
+    margin:0 10px;
+    border-radius: 20px;
+}
+.a a{
+  display: block;
+  text-align: left;
+  padding: 5px;
+}
+.thank{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    padding: 10px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+}
+.thankImage{
+    max-width: 300px;
+    overflow: hidden;
+}
+.reviews{
+    background-color: white;
+    border-radius: 50px;
+    padding: 20px;
+    margin: 10px;
+}

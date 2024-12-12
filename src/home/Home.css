@@ -1,0 +1,243 @@
+:root {
+    --primary-color:  rgb(247, 247, 247);
+    --secondary-color: rgb(0, 113, 93); 
+    
+}
+
+.Donate{
+    padding-top: 100px;
+    background-color:var(--primary-color);
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+    margin:30px 50px;
+    padding-bottom: 60px;
+    border-radius: 150px 0 150px;
+    
+
+}
+.donate-{
+    position: relative;
+    text-align: center;
+    width: 30%;
+    color:gray;
+  
+}
+.donate- h1{
+    text-align: left; 
+    color:black
+}
+.donate- h4{
+    text-transform: uppercase;
+    text-align: left;
+}
+.donate- p{
+    text-align: left;
+    font-size: 18px;
+    color: #4e4b4b;
+}
+
+
+.donate- button:hover{
+    background-color: white;
+    color: var(--secondary-color);
+}
+.Donate  img{
+    position: relative;
+    width: 500px; 
+    height: 400px; 
+    border-radius: 150px 0 150px 0;
+   
+}
+.service{
+    display: flex;
+   justify-content: space-evenly;
+    justify-items: center;
+    
+    margin: 20px;
+}
+.b{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--primary-color); 
+    padding: 20px;
+    border-radius:20px ;
+    
+}
+.b i{
+    color: var(--secondary-color); 
+    font-size: 20px;
+    background-color: white;
+    padding: 5px;
+    border-radius:50% ;
+}
+
+.b .Link{
+
+    text-decoration: none;
+    color:var(--secondary-color);
+
+}
+.ourServices{
+    text-align: center;
+
+}
+.title{
+    font-weight: 800;
+    color: #cdc8c8;
+    font-size: 100px;
+    padding: 0;
+    margin: 20px 0;
+    font-family: "Arial Rounded MT Bold", "sans-serif";
+}
+.pageTitle p{
+    margin: -35px 0 0 50px;
+    color: #4e4b4b;
+    font-size: 20px;
+}
+.About-Us{
+    text-align: center;
+    background-color: var(--primary-color);
+}
+.about-content{
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.about-content p{
+    font-size: 20px;
+    text-align: left;
+    width: 600px;
+}
+.title2 {
+    color:var(--secondary-color);
+    font-size: 100px;
+    padding: 0;
+    margin: 0;
+    font-family: "Arial Rounded MT Bold", "sans-serif";
+    
+}
+.content{
+    display: flex;
+    justify-content: space-evenly;
+     align-items: center;
+     text-align: left;
+     flex-wrap: wrap;
+     margin: 100px;
+}
+.content .co{
+  display: flex;
+  flex-direction: column;
+  width: 250px; 
+  border-radius:10px;
+  border: 1px solid var(--primary-color) ; 
+  box-shadow: 10px 10px 20px  var(--primary-color); 
+}
+.co img{
+   border-radius: 10px 10px 0 0;
+   max-height: 180px;
+   min-height: 150px;
+
+}
+.co p{
+    padding: 5px;
+}
+#down,#down2{
+    transform: translateY(20px);
+}
+#up,#up2{
+    transform: translateY(-30px);
+}
+.co h1{
+    color:var(--secondary-color);
+    margin: 2px;
+}
+.OurServ{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: var(--primary-color);
+    margin:50px ;
+    padding: 50px;
+    border-radius: 30px;
+}
+.images{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:0;
+}
+.images div .imgX{
+    background-color:white; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 30px;
+    border-radius:10px;
+    padding: 10px;
+    
+}
+.imgX i{
+ font-size: 50px;
+ padding: 10px;
+ 
+}
+.trans{
+    transform: translateY(40px);
+}
+.downIcon{
+    display: flex;
+    align-items: center;
+}
+.downIcon h3{
+    color:rgb(0, 113, 93);
+}
+.last{
+    background-image:url(../images/we.jpg);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 600px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+.last::before{
+    content: "";
+    background-color: rgb(0 0 0 / 60%);
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+}
+.lastContent{
+    position: relative;
+}
+.lastContent a{
+    display: block;
+    text-decoration: none;
+    font-size: 20px;
+    color:white;
+    padding: 20px;
+}
+.lastContent a:hover{
+    color: red;
+}
+.lastQuote{
+    color: white;
+    font-size: 25px;
+    font-family: "Exo 2", sans-serif;
+    font-weight: bold;
+    position: relative;
+    max-width: 800px;
+    line-height: 50px;
+    padding: 50px;
+    border: 2px solid white;
+    border-radius: 50px;
+
+}
