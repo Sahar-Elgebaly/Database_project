@@ -72,10 +72,13 @@ export default function AddNew(){
                     <textarea placeholder="Tell us what is the Description of your oppurtunity :"{...register('description')} rows='10' ></textarea>
                     
                 {errors.description && <p>{errors.description.message}</p>}
-                <select id="time" name="isOnline" {...register('isOnline')}>
+               <div style={{display:'flex',alignItems:'center'}}>
+                <div>IsOnline</div>
+               <select id="time" name="isOnline" {...register('isOnline')}>
                         <option value="true">true</option>
                         <option value="false">false</option>
                     </select>
+               </div>
                 {errors.isOnline && <p>{errors.isOnline.message}</p>}
                 <input
                     type="date"

@@ -28,7 +28,7 @@ export default function Help(){
     try {
         console.log()
         
-        const payload = { applicationId: data.applicationId, volunteerId: data.volunteerId,
+        const payload = { opportunityId: data.opportunityId, volunteerId: data.volunteerId,
             organizationId: data.organizationId }; 
        console.log('Payload being sent:', JSON.stringify(payload));
     //    const token = localStorage.getItem('jwt');
@@ -53,39 +53,7 @@ export default function Help(){
     }
 
 }
-//    const onSubmit=async(data)=>{
-//     console.log(data)
-    
-//     try {
-//         const payload = {opportunityId : data.opportunityId, volunteerId: data.volunteerId,
-//             organizationId: data.organizationId }; 
-//             console.log('Payload being sent:', JSON.stringify(payload));
-//         // console.log(JSON.stringify(jsonData));
-//         const response = await fetch('https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Application', {
-//             method: 'POST',
-//             headers: {  'Content-Type': 'application/json', 'Accept': 'application/json','Authorization': `Bearer ${data.authToken}`
-//              },
-//             body: JSON.stringify(payload),
-//         });
 
-//         if (response.ok) {
-//             const result = await response.json();
-//             console.log('Success:', result);
-//             if (result) {
-//                 navigate('/find-opportunities');
-//             } else {
-//                 console.error('Received null result from API');
-//             }
-            
-//         } else {
-//             const errorText = await response.text(); 
-//             console.error('Error:', errorText);
-//              alert('Failed to submit. Please try again.');
-//         }
-//     } catch (error) {
-//         console.error('Network error:', error); alert('Network error. Please try again later.');
-//     }
-//    }
     return(
         <div className='conainer3'>
             <div className='imagee'><img src={help} alt=''/></div>

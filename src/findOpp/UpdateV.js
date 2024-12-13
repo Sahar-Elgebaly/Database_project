@@ -36,6 +36,7 @@ import { useNavigate } from 'react-router-dom';
                console.log(formData)
            const response = await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Account/updateVolunteer/${id}`, {
                method: 'PUT',
+               
                body:formData,
            });
 
@@ -65,8 +66,9 @@ import { useNavigate } from 'react-router-dom';
 
    }
  
-    return(<div className="sV">
-        <div className='blur'></div>
+    return(<div className="sVx">
+       <div className="sV">
+       <div className='blur'></div>
          <div className='container'>
          <form className="signV" onSubmit={handleSubmit(onSubmit)}>
         <h1>Update My Data</h1>
@@ -82,5 +84,6 @@ import { useNavigate } from 'react-router-dom';
                     <button type="submit" className="sign-up-btn" onClick={() => console.log('Debug: Button clicked')}>Update</button>            
        </form>
          </div>
+       </div>
     </div>)
 }

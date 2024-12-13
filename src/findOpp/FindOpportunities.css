@@ -5,7 +5,7 @@
 }
 .volunteerProf{
  display: grid;
- grid-template-columns: 4fr 1fr;
+ grid-template-columns: 4fr 0fr;
  margin-top: 50px;
  
 
@@ -70,7 +70,7 @@
     border-radius: 40px 0 40px 0;
     border:1px solid var(--secondary-color);
     box-shadow: 0px 4px 15px 0px var(--secondary-color);
-    min-width: 900px;
+    /* min-width: 900px; */
 
 }
 .titleOpp h5{

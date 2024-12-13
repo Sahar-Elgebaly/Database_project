@@ -127,7 +127,7 @@ export default function SideeBar() {
     setSettinng(!settinng);
   }
   const update = (id) => {
-    navigate(`/UpdateO/${id}}`)
+    navigate(`/UpdateO/${id}`)
   }
   const handleLogout = () => {
     localStorage.removeItem('organization');

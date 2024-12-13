@@ -19,7 +19,7 @@ export default function UpdateOpp() {
         .required('Deadline is required')
         .typeError('Deadline must be a valid date'),
         skillIDs: Yup.array()
-        .of(Yup.string().required('Skill ID must be a string'))
+        .of(Yup.number().required('Skill ID must be a number'))
         .optional() 
         .nullable() 
         .transform((value) => (value && value.length === 0 ? undefined : value)), 
@@ -40,20 +40,19 @@ export default function UpdateOpp() {
     useEffect(() => { getSkills(); }, []);
     const onSubmit = async (data) => {
         try {
-            const payload = { organizationId: data.organizationId, description: data.description, isOnline: data.isOnline, 
-                deadline: new Date(data.deadline).toISOString(), skillIDs: data.skillIDs || [] };
+            console.log('Selected skillIDs:', data.skillIDs);
+            const payload = { organizationId: data.organizationId, description: data.description, isOnline: data.isOnline=== 'true', 
+                deadline: new Date(data.deadline).toISOString(), skillIDs:  [] };
              console.log('Payload being sent:', JSON.stringify(payload));
             const response = await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Opportunity/${id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'text/plain' },
+                headers: { 'Content-Type': 'application/json' },
                  body: JSON.stringify(payload),
             });
-            console.log(response.data)
             if (response.ok) {
                 const result = await response.text();
                 console.log('Success:', result);
                  navigate('/OurV');
-
             } else {
                 const error = await response.json();
                 console.error('Error:', error);
@@ -64,8 +63,9 @@ export default function UpdateOpp() {
 
     }
 
-    return (<div className="sV">
-        <div className='blurx'></div>
+    return (<div className="sVx">
+       <div className="sV">
+       <div className='blurx'></div>
         <div className='container'>
         <form className="signV" onSubmit={handleSubmit(onSubmit)}>
         <h1>Update Oppurtunity</h1>
@@ -74,27 +74,28 @@ export default function UpdateOpp() {
                     <textarea placeholder="Tell us what is the Description of your oppurtunity :"{...register('description')} rows='10' ></textarea>
                     
                 {errors.description && <p>{errors.description.message}</p>}
-                <select id="time" name="isOnline" {...register('isOnline')}>
+               <div style={{display:'flex',alignItems:'center'}}>
+                <div>IsOnLine</div>
+               <select id="time" name="isOnline" {...register('isOnline')}>
                         <option value="true">true</option>
                         <option value="false">false</option>
                     </select>
+               </div>
                 {errors.isOnline && <p>{errors.isOnline.message}</p>}
                 <input
                     type="date"
                     {...register('deadline')}
                 />
                 {errors.deadline && <p>{errors.deadline.message}</p>}
-                <div style={{display:'flex',alignItems:'center'}} > <div style={{fontSize:'20px'}}>Skills  </div> <select style={{minWidth:'200px'}} id="time" multiple name="skillIDs"  {...register('skillIDs')} > 
-                        {skills.map((skill) => ( <option key={skill.id} value={skill.id}>{skill.name}</option> ))}
-                    </select></div>
-                    <p style={{color:'black'}}>*Hint : use the Ctrl key while clicking on the options</p>
-               
-                    {errors.skillIDs && <p>{errors.skillIDs.message}</p>}
+                
+                   
+                    
                 <button type="submit" className="sign-up-btn" >Update</button>     
                             
                    
        
        </form>
         </div>
+       </div>
     </div>)
 }
