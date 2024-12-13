@@ -178,7 +178,7 @@ const showReviews=(id)=>{
 
                <div className='titles'>
               <h1 ><i class="fa-solid fa-arrow-right"></i> Organization ID : {appps.organizationId}</h1>
-              <button className='donates' onClick={()=>showReviews(appps.id)}>commands</button>
+              <button className='donates' onClick={()=>showReviews(appps.id)}>comments</button>
               {reviewId === appps.id &&
                 ( reviews.length>0 ? (reviews.map((review)=>{
     
@@ -186,7 +186,7 @@ const showReviews=(id)=>{
                    <div className='reviews'>
                      <ul key={review.id}>
                      <li>
-                     <h3> commant : <span>{review.comment}</span></h3>
+                     <h3> comment : <span>{review.comment}</span></h3>
                      <h3> Rating : <span>{review.rating}</span></h3>
                      <h3>date Reviewed : <span>{review.dateReviewed}</span></h3>
                      </li>
@@ -194,7 +194,7 @@ const showReviews=(id)=>{
                    </div>
                   )
              
-                 })):((<div>no Commonds</div>)))
+                 })):((<div>no Comments</div>)))
              }
               </div>
               <div >
