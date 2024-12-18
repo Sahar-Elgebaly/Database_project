@@ -6,6 +6,7 @@ import { useForm  } from "react-hook-form";
 import axios from "axios";
 import '../sign-up/Sign-Up.css'
 import { useParams } from 'react-router-dom';
+import BASE_URL from "../config";
 import { useNavigate } from 'react-router-dom';
 export default function UpdateOpp() {
     const [skills,setSkills]=useState([]);
@@ -31,7 +32,7 @@ export default function UpdateOpp() {
         }
     });
     const getSkills=async()=>{
-        try { const response = await axios.get('https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Skill/GetAll'); 
+        try { const response = await axios.get(`${BASE_URL}/api/Skill/GetAll`); 
             const skill = response.data; 
             setSkills(skill);
              console.log(skill); }
@@ -44,7 +45,7 @@ export default function UpdateOpp() {
             const payload = { organizationId: data.organizationId, description: data.description, isOnline: data.isOnline=== 'true', 
                 deadline: new Date(data.deadline).toISOString(), skillIDs:  [] };
              console.log('Payload being sent:', JSON.stringify(payload));
-            const response = await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Opportunity/${id}`, {
+            const response = await fetch(`${BASE_URL}/api/Opportunity/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                  body: JSON.stringify(payload),
@@ -69,8 +70,7 @@ export default function UpdateOpp() {
         <div className='container'>
         <form className="signV" onSubmit={handleSubmit(onSubmit)}>
         <h1>Update Oppurtunity</h1>
-            <input type='text' placeholder="organization Id" name="organizationId" {...register('organizationId')}/>
-                {errors.organizationId && <p>{errors.organizationId.message}</p>}
+          
                     <textarea placeholder="Tell us what is the Description of your oppurtunity :"{...register('description')} rows='10' ></textarea>
                     
                 {errors.description && <p>{errors.description.message}</p>}

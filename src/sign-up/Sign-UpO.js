@@ -5,6 +5,7 @@ import React from "react";
 import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom'; 
+import BASE_URL from '../config';
 export default function SignUpO(){
     const [err,setErr]=useState('')
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function SignUpO(){
             formData.append(key, data[key]);}
         try {
 
-            const response = await fetch("https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Account/registerO", {
+            const response = await fetch(`${BASE_URL}/api/Account/registerO`, {
                 method: 'POST',
                 body:formData ,
             });

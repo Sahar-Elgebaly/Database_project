@@ -6,6 +6,7 @@ import '../sign-up/Sign-Up.css'
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useState,useEffect } from "react";
+import BASE_URL from "../config";
 import axios from "axios";
 export default function AddNew(){
     const [skills,setSkills]=useState([]);
@@ -23,7 +24,7 @@ export default function AddNew(){
         .of(Yup.string().required('Skill ID must be a string'))
         .optional() 
         .nullable() 
-        .transform((value) => (value && value.length === 0 ? undefined : value)), // Transform empty array to undefined
+        .transform((value) => (value && value.length === 0 ? undefined : value)), 
 });
     const { register, handleSubmit, formState: { errors },setValue } = useForm({
         resolver: yupResolver(schema),
@@ -32,7 +33,7 @@ export default function AddNew(){
         }
     });
     const getSkills=async()=>{
-        try { const response = await axios.get('https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Skill/GetAll'); const skill = response.data; setSkills(skill);
+        try { const response = await axios.get(`${BASE_URL}/api/Skill/GetAll`); const skill = response.data; setSkills(skill);
              console.log(skill); }
               catch (error) { console.error('Error fetching skills:', error); }
     }
@@ -41,7 +42,7 @@ export default function AddNew(){
         try {
             const payload = { organizationId: data.organizationId, description: data.description, isOnline: data.isOnline, deadline: data.deadline, skillIDs: data.skillIDs || [] };
              console.log('Payload being sent:', JSON.stringify(payload));
-            const response = await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Opportunity`, {
+            const response = await fetch(`${BASE_URL}/api/Opportunity`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'text/plain' },
                 body: JSON.stringify(payload),
@@ -67,8 +68,7 @@ export default function AddNew(){
         <div className='container'>
         <form className="signV" onSubmit={handleSubmit(onSubmit)}>
         <h1>Add Oppurtunity</h1>
-            <input type='text' placeholder="organization Id" name="organizationId" {...register('organizationId')}/>
-                {errors.organizationId && <p>{errors.organizationId.message}</p>}
+            
                     <textarea placeholder="Tell us what is the Description of your oppurtunity :"{...register('description')} rows='10' ></textarea>
                     
                 {errors.description && <p>{errors.description.message}</p>}

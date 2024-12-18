@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import './Sign-Up.css'
 import { useNavigate } from 'react-router-dom'; 
+import BASE_URL from "../config";
  function SignUpV(){
     const [err,setErr]=useState('')
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ import { useNavigate } from 'react-router-dom';
             for (const key in data) {
                 formData.append(key, data[key]|| '');}
                 console.log(formData)
-            const response = await fetch('https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Account/registerV', {
+            const response = await fetch(`${BASE_URL}/api/Account/registerV`, {
                 method: 'POST',
                 body:formData,
             });

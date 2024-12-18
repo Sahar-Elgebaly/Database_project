@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import './Log-InV.css'
 import login from '../images/log-inV.jpg'
 import axios from "axios";
+import BASE_URL from "../config";
 export default function LogInV() {
     const navigate = useNavigate();
     const [iserror, seterror] = useState('');
@@ -26,26 +27,26 @@ export default function LogInV() {
         }
         try {
 
-            const response = await fetch("https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Account/Login", {
+            const response = await fetch(`${BASE_URL}/api/Account/Login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Set the content type to JSON
+                    'Content-Type': 'application/json', 
                 },
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                const token = await response.text(); // Get the response as plain text
+                const token = await response.text(); 
                 console.log('Login successful. JWT:', token);
                 const decodedToken = jwtDecode(token);
                  console.log('User information:', JSON.stringify(decodedToken.sub));
                  const id=decodedToken.sub;
                 if (decodedToken.UserType === 'Volunteer') {
-                    const response = await axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Volunteer/${id}`);
+                    const response = await axios.get(`${BASE_URL}/api/Volunteer/${id}`);
                     localStorage.setItem('volunteer',JSON.stringify(response.data));
                      navigate('/find-opportunities');
                      } 
                 else if (decodedToken.UserType === 'Organization') {
-                    const response = await axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Organization/${id}`);
+                    const response = await axios.get(`${BASE_URL}/api/Organization/${id}`);
                     localStorage.setItem('organization',JSON.stringify(response.data));
                      navigate('/OurV'); }
             }

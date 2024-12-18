@@ -6,9 +6,11 @@ import { useForm } from "react-hook-form";
 import '../sign-up/Sign-Up.css'
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import BASE_URL from "../config";
 export default function UpdateO() {
     const { id } = useParams();
-    console.log(id);
+     const [err,setErr]=useState('');
     const navigate = useNavigate();
     const schema = Yup.object().shape({
         Name: Yup.string().matches(/^[a-zA-Z]+$/, 'Name can only contain letters and cannot have spaces')
@@ -39,18 +41,16 @@ export default function UpdateO() {
                     console.log(key, value);
                 }
                 console.log(formData)
-            const response = await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Account/updateOrganization/${id}`, {
+            const response = await fetch(`${BASE_URL}/api/Account/updateOrganization/${id}`, {
                 method: 'PUT',
                 body:formData,
             });
  
             if (response.ok) {
-             const getresult=await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Organization/${id}`,
+             const getresult=await fetch(`${BASE_URL}/api/Organization/${id}`,
                  {method:'Get'}
              )
-                console.log('Success:');
-                console.log('GET Response:', getresult);
-                console.log(getresult)
+
                 if (getresult.ok) {
                     const updatedOrganizationData = await getresult.json();
                                    localStorage.setItem('organization', JSON.stringify(updatedOrganizationData));
@@ -58,16 +58,19 @@ export default function UpdateO() {
                               navigate('/OurV');
                 } else {
                     console.error('Received null result from API', getresult.statusText);
+                    setErr('This user already have an account')
                 }
                 
             } else{  const error = await response.json();
             console.error('Error:', error);
             if (error.errors) {
                 console.error('Validation Errors:', error.errors);
+                setErr('This user already have an account')
             }
         }
         } catch (error) {
             console.error('Network error:', error);
+            setErr('This user already have an account')
         }
  
     }
@@ -94,7 +97,8 @@ export default function UpdateO() {
                     <input type="file" id="photo" name="Photo" accept="image/*" alt="" {...register("Photo")}/>
                     <textarea id="Mission" name="Mission" placeholder="Tell us what is Your Mission About:" rows="10" {...register('Mission')}></textarea>
                     {errors.Mission && <p>{errors.Mission.message}</p>}
-                    <button type="submit" className="sign-up-btn" >Update</button>     
+                    <button type="submit" className="sign-up-btn" >Update</button>   
+                    {err!==null&&(<p>{err}</p>)}  
                    
        
        </form>

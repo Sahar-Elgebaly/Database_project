@@ -3,10 +3,11 @@ import './FindOpportunities.css'
 import not from '../images/not.jpg'
 import def from '../images/default.jpg'
 import needed from '../images/needed.jpg'
-import hope from '../images/hope.png'
+import hope from '../images/hands.jpg'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'; 
 import thank from '../images/thank.png'
+import BASE_URL from '../config'
 
 function FindOpportunities() {
   const [volunteer, setVolunteer] = useState(() => {
@@ -20,13 +21,14 @@ function FindOpportunities() {
   const [originalOpportunities, setOriginalOpportunities] = useState([]);
   const [expandedId, setExpandedId] = useState(null);
   const [reviewId, setReviewId] = useState(null);
+  const [appId, setAppId] = useState(null);
   const [IsClick, setIsClick] = useState(false);
   const [settinng,setSettinng]=useState(false);
   const [applications,setApplications]=useState({});
   const [app,setApp]=useState(false);
   const [helpOpp,setHelpOpp]=useState([]);
   const [reviews,setReviews]=useState([]);
-  const [reviewsOpen,setReviewsOpen]=useState(false);
+  const [appContent,setAppContent]=useState([]);
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('volunteer');
@@ -35,7 +37,7 @@ function FindOpportunities() {
   useEffect(() => {
     const fetchOpportunities = async () => {
       try {
-        const response = await axios.get('https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Opportunity/GetAll');
+        const response = await axios.get(`${BASE_URL}/api/Opportunity/GetAll`);
         setOppor(response.data);
         setOriginalOpportunities(response.data);
         setSearch(response.data); 
@@ -69,7 +71,7 @@ function FindOpportunities() {
     }
   }
   const changeState = async(id) => {
-    const response=await axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Opportunity/${id}`)
+    const response=await axios.get(`${BASE_URL}/api/Opportunity/${id}`)
     const apps=response.data;
     setHelpOpp(apps);
     setExpandedId(prevId => (prevId === id ? null : id));
@@ -82,8 +84,13 @@ function FindOpportunities() {
      navigate(`/UpdateV/${id}`)
   }
  const deleteAccount= async(id)=>{
+  const confirmDelete = window.confirm("Are you sure you want to delete this Account?");
+  if (!confirmDelete) {
+    console.log('Deletion canceled');
+    return; 
+  }
    try{
-    const  response = await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Account/${id}`, {
+    const  response = await fetch(`${BASE_URL}/api/Account/${id}`, {
       method: 'DELETE', 
   });
    if(response.ok){
@@ -98,15 +105,75 @@ function FindOpportunities() {
     console.error('Network error:', error);
    }
 };
-const helpPage=(organizationId,volunteerId,oppId)=>{
-  navigate(`/help/${organizationId}/${volunteerId}/${oppId}`)
+const deleteApp= async(id)=>{
+  const confirmDelete = window.confirm("Are you sure you want to delete this application?");
+  if (!confirmDelete) {
+    console.log('Deletion canceled');
+    return; 
+  }
+  try{
+   const  response = await fetch(`${BASE_URL}/api/Application/${id}`, {
+     method: 'DELETE', 
+ });
+  if(response.ok){
+   console.log('Application deleted successfully');
+   setApplications((prevApplications) => 
+    prevApplications.filter(app => app.id !== id)
+  );
+  }else{
+   const errorResponse = await response.text(); 
+   console.error('Error deleting volunteer:', response.status, errorResponse);
+  }
+  }catch(error){
+   console.error('Network error:', error);
+  }
+};
+const helpPage=async(organizationId,volunteerId,oppId)=>{
+  const confirmDelete = window.confirm("Are you sure you want to Help in this opportunity?");
+  if (!confirmDelete) {
+    console.log('Deletion canceled');
+    return; 
+  }
+  const data={
+    "opportunityId":oppId,
+    "volunteerId":volunteerId,
+    "organizationId":organizationId
+
+  }
+    try {
+        console.log()
+        
+        const payload = { opportunityId: data.opportunityId, volunteerId: data.volunteerId,
+            organizationId: data.organizationId }; 
+       console.log('Payload being sent:', JSON.stringify(payload));
+       
+        const response = await fetch(`${BASE_URL}/api/Application`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'text/plain',
+             },
+                 body: JSON.stringify(payload),
+        });
+        
+        if (response.ok) {
+            const result = await response.text();;
+             console.log('Success:', result); 
+             window.alert('Thinks for send request')
+             navigate('/find-opportunities');
+
+        }
+    } catch (error) {
+        console.error('Network error:', error);
+    }
+
+
+  
 }
 const setting=()=>{
    setSettinng(!settinng);
 }
 const myApplication=async(id)=>{
   try{
-    const response=await axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Volunteer/${id}/applications`)
+    const response=await axios.get(`${BASE_URL}/api/Volunteer/${id}/applications`)
    console.log(response.data);
    const appss=response.data.applications;
    console.log(appss)
@@ -119,11 +186,27 @@ const myApplication=async(id)=>{
     setApplications([]);
   }
 }
+const appcontent=async(id)=>{
+  try{
+    const response=await axios.get(`${BASE_URL}/api/Application/${id}/details`)
+   const ap=response.data.opportunity;
+   const apid=response.data.id;
+   localStorage.setItem('apps',JSON.stringify(ap))
+    const appsFromStorage = JSON.parse(localStorage.getItem('apps'));
+    setAppContent(appsFromStorage);
+    setAppId(prevId => (prevId === apid ? null : apid));
+   
+  }
+  catch (error){
+    console.error('Error fetching Application:', error);
+    setApplications([]);
+  }
+}
 const orgPage=(id)=>{
   navigate(`/Org/${id}`)
 }
 const showReviews=(id)=>{
-  axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Application/${id}/reviews`).then(result=>{ 
+  axios.get(`${BASE_URL}/api/Application/${id}/reviews`).then(result=>{ 
     localStorage.setItem('review',JSON.stringify(result.data.reviews))
     const reviewsFromStorage = JSON.parse(localStorage.getItem('review'));
     setReviews(reviewsFromStorage);
@@ -132,6 +215,35 @@ const showReviews=(id)=>{
 
 }
 ).catch((error)=>console.log(error))
+}
+const deleteReview=async(id)=>{
+  const confirmDelete = window.confirm("Are you sure you want to delete this Comment?");
+  if (!confirmDelete) {
+    console.log('Deletion canceled');
+    return; 
+  }
+  try{
+    const  response = await fetch(`${BASE_URL}/api/Review/${id}`, {
+      method: 'DELETE', 
+  });
+   if(response.ok){
+    console.log('Review deleted successfully');
+    setReviews((setReviews) => 
+      setReviews.filter(app => app.id !== id)
+   );
+   }else{
+    const errorResponse = await response.text(); 
+    console.error('Error deleting volunteer:', response.status, errorResponse);
+   }
+   }catch(error){
+    console.error('Network error:', error);
+   }
+
+}
+const newSkills=(id)=>{
+  navigate(`/Skills/${id}`)
+  console.log(id)
+
 }
   return (
     <div className='volunteerProf'>
@@ -149,15 +261,15 @@ const showReviews=(id)=>{
                   <div key={opp.id} className='titleOpp' >
                     <div>
                       <div className='titles'> 
-                       <h1 ><i class="fa-solid fa-arrow-right"></i> {opp.description}</h1></div>
+                       <h1 ><i className="fa-solid fa-arrow-right"></i> {opp.description}</h1></div>
                       <p>ID : {opp.id}</p>
                       <h5>Flexible Schedule || {opp.isOnline===true?"OnLine":"OffLine"}</h5>
-                      <p> organization id : {opp.organizationId}</p>
+                      <p> organization Name : {opp.organization.name}</p>
+                      <p> organization Mission : {opp.organization.mission}</p>
                       <h5>Date Posted : {opp.deadline}</h5>
                       <button type='submit' onClick={() => changeState(opp.id)} className='More'>More Details</button>  </div>
                     {expandedId === opp.id && <div className='right'>
                       <h1>ID:{helpOpp.id}</h1>
-                      <h5>Cause Area <p>{opp.category}</p></h5>
                       <h5>Where : <p>{helpOpp.isOnline===true?'OnLine':'OffLine ,will send location'}</p></h5>
                       <h5>DateLine : <p>{helpOpp.deadline}</p></h5>
                       <h5>Required Skills<p>{helpOpp.skills.map((skills) => { return (<div><ul>{skills.id} : {skills.name}</ul></div>) })}</p></h5>
@@ -174,11 +286,26 @@ const showReviews=(id)=>{
           <h1 style={{textAlign:'center' , paddingTop:"20px"}}>My Application</h1>
              {applications.map((appps)=>{
               return(
-                <div  key={appps.id} className="titleOpp">
-
+                <div  key={appps.id} className="titleOpp">     
                <div className='titles'>
-              <h1 ><i class="fa-solid fa-arrow-right"></i> Organization ID : {appps.organizationId}</h1>
+               <i className="fa-solid fa-x" onClick={()=>deleteApp(appps.id)} style={{cursor:'pointer',fontSize:'25px',height:'fit-content',borderRadius:'50%',color:' rgb(0, 113, 93)'}}></i>
+        
+          <div>   <div style={{display:'flex',flexDirection:'row' ,alignItems:'center' ,}}>
+          <div>
+          <p > Organization ID : {appps.organizationId}</p>
+              <p>Application ID : {appps.id}</p>
+              <h5 > Status : {appps.status}</h5>
+              <h5>Date Sented : {appps.dateSent}</h5>
+          </div>
+             <div className='ll' style={{padding:'20px'}}>
+             <i className="fa-solid fa-angles-right" onClick={()=>appcontent(appps.id)}></i>
+             </div>
+          </div>
+              <br></br>
               <button className='donates' onClick={()=>showReviews(appps.id)}>comments</button>
+              </div>
+              
+          
               {reviewId === appps.id &&
                 ( reviews.length>0 ? (reviews.map((review)=>{
     
@@ -189,6 +316,7 @@ const showReviews=(id)=>{
                      <h3> comment : <span>{review.comment}</span></h3>
                      <h3> Rating : <span>{review.rating}</span></h3>
                      <h3>date Reviewed : <span>{review.dateReviewed}</span></h3>
+                     <button className='donates'onClick={()=>deleteReview(review.id)}>Delete</button>
                      </li>
                     </ul>
                    </div>
@@ -197,13 +325,15 @@ const showReviews=(id)=>{
                  })):((<div>no Comments</div>)))
              }
               </div>
-              <div >
-              <p>Volunteer Id (Your) : {appps.volunteerId}</p>
-              <p>ID : {appps.id}</p>
-                      <h5> Status : {appps.status}</h5>
-                      <h5>Date Sented : {appps.dateSent}</h5>
-             </div>
-
+              {appId === appps.id &&
+                (<div className='newRight'>
+                  <h3>Opportunity ID:<span>{appContent.id}</span> <h5>posted at : {appContent.datePosted}</h5></h3>
+                  <p>description :<span> {appContent.description}</span></p>
+                  <p>isOnline :<span>{appContent.isOnline?'OnLine':'OffLine'}</span></p>
+                  <p>Deadline : <span>{appContent.deadline}</span></p>
+                </div>)
+             }
+             
                   </div>
               )
              })}
@@ -216,7 +346,8 @@ const showReviews=(id)=>{
         {settinng && (<div className='a' >
           <a href='#' onClick={()=>update(volunteer.volunteerId)}>Update</a>
           <a href='#' onClick={handleLogout}>Log Out</a>
-          <a href='#' onClick={()=>deleteAccount(volunteer.volunteerId)}>Delete this Account</a>        
+          <a href='#' onClick={()=>deleteAccount(volunteer.volunteerId)}>Delete this Account</a> 
+          <a href='#' onClick={()=>newSkills(volunteer.volunteerId)} >Add Skills</a>       
         </div>)}
       </div>
         <div className='infor' >
@@ -230,8 +361,10 @@ const showReviews=(id)=>{
           <p  >Age :<span> {volunteer.age}</span></p>
           <p>Address :<span> {volunteer.address}</span></p>
           <p>Phone Number : <span> {volunteer.phone}</span></p>
-          <p>Skills :<span> {volunteer.skills}</span></p>
+          <p>Bio : <span>{volunteer.bio}</span></p>
+          <p>Rating:<span> {volunteer.rating} </span></p>
           <p>My ID :<span> {volunteer.volunteerId}</span></p>
+          <p> Skills : <span>{volunteer.skills.map((skills) => { return (<div><ul>  {skills.name}</ul></div>) })}</span></p>
         </div>
         <div className='thank'>
             <img className='thankImage' src={thank} alt=''/>

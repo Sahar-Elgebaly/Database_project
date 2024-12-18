@@ -4,6 +4,7 @@ import axios from "axios";
 import React from "react";
 import './Org.css';
 import './FindOpportunities.css'
+import BASE_URL from "../config";
 export default function Org(){
     const {id}=useParams();
     const [org,setOrg]=useState([]);
@@ -12,20 +13,20 @@ export default function Org(){
     const [helpOpp,setHelpOpp]=useState([]);
     const [expandedId, setExpandedId] = useState(null);
     useEffect(()=>{
-        axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Organization/${id}`).then(result=>{ setOrg(result.data)
+        axios.get(`${BASE_URL}/api/Organization/${id}`).then(result=>{ setOrg(result.data)
             localStorage.setItem('org',JSON.stringify(org))
         }
         ).catch((error)=>console.log(error))
     },[])
     const getOpp= async()=>{
-        const response=await axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Organization/${org.organizationId}/opportunities`)
+        const response=await axios.get(`${BASE_URL}/api/Organization/${org.organizationId}/opportunities`)
     const apps=response.data.opportunities;
     setIsOpen(!isopen);
     setOpp(apps);
 
     }
     const changeState = async(id) => {
-        const response=await axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Opportunity/${id}`)
+        const response=await axios.get(`${BASE_URL}/api/Opportunity/${id}`)
         const apps=response.data;
         setHelpOpp(apps);
         setExpandedId(prevId => (prevId === id ? null : id));
@@ -35,7 +36,6 @@ export default function Org(){
           <div  className='org'>
           <div >
            <div style={{alignItems:'center' ,borderBottom:'1px solid black'}}>
-           <h1><img src={org.photo}/></h1>
            <h1 >{org.name}</h1>
            </div>
     

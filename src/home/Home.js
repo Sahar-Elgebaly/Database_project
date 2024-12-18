@@ -6,8 +6,8 @@ import eduction from '../images/education.jpg'
 import water from '../images/water.jpg'
 import medical from '../images/Medical.jpg'
 import about from '../images/about.png'
-import about2 from '../images/about2.png'
 import { useState } from 'react';
+import vol from '../images/vol.png'
 function Home() {
     const [isDown, setIsDown] = useState([false, false, false, false]);
     const changeState = (index) => {
@@ -19,17 +19,17 @@ function Home() {
     }
     return (
         <div className="quote">
-            <div className='Donate'>
-                <div className='donate-'>
-                    <h4 >always donate for children</h4>
-                    <h1>Lend a Helping Hand to Those in Need</h1>
-                    <p>You see, helping someone up need not involve grand gestures. Even small acts of kindness can have an incredible impact. Oftentimes, all it takes is a desire to ease other people’s suffering and a willingness to make little sacrifices to make the world a better place.</p>
-                </div>
-                <div className='donate' >
-                    <img src={Donate} alt='' />
-                </div>
-
+            <div className='welc'>
+            <div  className='hh'>
+                <h4><h2>Unite for Change, Volunteer Today.</h2> Our app is your gateway to making a difference. Connect with organizations that need your passion and skills, and find volunteer opportunities that resonate with you. From local initiatives to global causes, join hands to create a better world. Together, we can achieve more.</h4>
+               <a  href='#about'> <i className="fas fa-angle-double-down fa-2x"></i></a>
             </div>
+            
+                <div className='welcimg'>
+                    <img src={vol} alt=''/>
+                </div>
+            </div>
+
             <div className='service'>
                 <div className='b'>
                     <i className="fa fa-users" aria-hidden="true"></i>
@@ -42,6 +42,7 @@ function Home() {
                     <div>  <p>Become A Volunteer And Find Your Oppertunities</p>
                         <Link className="Link" to="/Sign-UpV">Find Opportunities</Link></div>
                 </div> </div>
+
             <div className='About-Us' id='about'>
                 <div className='pageTitle2'>
                     <h1 className='title2'>
@@ -55,6 +56,17 @@ function Home() {
                 <p>This app connects volunteers and donors with organizations in need, making it easier to support causes that matter. Volunteers can find opportunities to contribute their skills and time, while donors can seamlessly fund initiatives they care about. The app ensures transparency, tracks impact, and fosters a collaborative community dedicated to creating positive change.</p></div>
                
              </div>
+            </div>
+            <div className='Donate'>
+                <div className='donate-'>
+                    <h4 >always donate for children</h4>
+                    <h1>Lend a Helping Hand to Those in Need</h1>
+                    <p>You see, helping someone up need not involve grand gestures. Even small acts of kindness can have an incredible impact. Oftentimes, all it takes is a desire to ease other people’s suffering and a willingness to make little sacrifices to make the world a better place.</p>
+                </div>
+                <div className='donate' >
+                    <img src={Donate} alt='' />
+                </div>
+
             </div>
             <div id='services' className='ourServices'>
                 <div className='pageTitle'>

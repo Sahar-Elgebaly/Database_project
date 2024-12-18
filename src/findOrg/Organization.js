@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import hope from '../images/hope.png'
 import axios from "axios";
+import BASE_URL from "../config";
 
 export default function SideeBar() {
   const [organization, setOrganization] = useState(null);
@@ -61,13 +62,13 @@ export default function SideeBar() {
       name: "ID",
       selector: row => row.ID,
       sortable: true,
-      width:"80px",
+      maxWidth:'80px'
     },
     {
       name: "opportunityId",
       selector: row => row.opportunityId,
       sortable: true,
-      width:"100px",
+      maxWidth:"100px",
     },
     {
       name: "volunteerId",
@@ -78,13 +79,13 @@ export default function SideeBar() {
       name: "status",
       selector: row => row.status,
       sortable: true,
-      width:"100px",
+      maxWidth:"100px",
     },
     {
       name: "dateSent",
       selector: row => row.dateSent,
       sortable: true,
-      width:"200px",
+      maxWidth:"200px",
     },
     {
       name: "Action",
@@ -134,8 +135,13 @@ export default function SideeBar() {
     navigate('/');
   };
   const deleteAccount = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this Account?");
+    if (!confirmDelete) {
+      console.log('Deletion canceled');
+      return; 
+    }
     try {
-      const response = await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Account/${id}`, {
+      const response = await fetch(`${BASE_URL}/api/Account/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -151,7 +157,7 @@ export default function SideeBar() {
     }
   };
   const isVolunteer = async(id) => {
-    const response=await axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Organization/${id}/applications`)
+    const response=await axios.get(`${BASE_URL}/api/Organization/${id}/applications`)
     console.log(response.data);
     const apps=response.data.applications;
     console.log(apps);
@@ -163,7 +169,7 @@ export default function SideeBar() {
      try{
        
        const payload = { id: id,status: 'approved' };
-      const response= await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Application/${id}`,
+      const response= await fetch(`${BASE_URL}/api/Application/${id}`,
         {method:'PUT',
           headers: {
             'Content-Type': 'application/json', 
@@ -187,8 +193,13 @@ export default function SideeBar() {
 
   }
   const deleteVolunteer = async(id)=>{
+    const confirmDelete = window.confirm("Are you sure you want to delete this Account?");
+    if (!confirmDelete) {
+      console.log('Deletion canceled');
+      return; 
+    }
    try{
-    const response= await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Application/${id}`,
+    const response= await fetch(`${BASE_URL}/api/Application/${id}`,
       {method:'DELETE'}
     );
     console.log(response.data)
@@ -204,7 +215,7 @@ export default function SideeBar() {
 
   }
   const isOppurtunity=async(id)=>{
-    const response=await axios.get(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Organization/${id}/opportunities`)
+    const response=await axios.get(`${BASE_URL}/api/Organization/${id}/opportunities`)
     const apps=response.data.opportunities;
     setOpportunite(apps);
     setOpportuniteTable(!opportuniteTable);
@@ -217,8 +228,13 @@ export default function SideeBar() {
  
   }
   const deleteOpp=async(id)=>{
+    const confirmDelete = window.confirm("Are you sure you want to delete this Account?");
+    if (!confirmDelete) {
+      console.log('Deletion canceled');
+      return; 
+    }
     try{
-      const response= await fetch(`https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Opportunity/${id}`,
+      const response= await fetch(`${BASE_URL}/api/Opportunity/${id}`,
         {method:'DELETE'}
       );
       console.log(response.data)
@@ -235,9 +251,12 @@ export default function SideeBar() {
   const updateOpp=(id)=>{
     navigate(`/UpdateOpp/${id}/${organization.organizationId}`)
   }
-  const addReview=(appId,vId)=>{
+  const addReview=(appId)=>{
      const orgId=organization.organizationId;
-    navigate(`/ReviewOpp/${appId}/${vId}/${orgId}`);
+    navigate(`/ReviewOpp/${appId}`);
+  }
+  const user=(id)=>{
+    navigate(`/Vol/${id}`)
   }
   return (
     <div className="orgPadge">
@@ -254,8 +273,9 @@ export default function SideeBar() {
                 status:apps.status,
                 action:<div>
                 <button className="AccButton" onClick={()=>acceptVolunteer(apps.id)}>Accept</button>
-                <button className="DelButton" onClick={()=>deleteVolunteer(apps.id)}>Delete</button>
-              <button className="AccButton" onClick={()=>addReview(apps.id,apps.volunteerId)}>Review</button>
+              <button className="AccButton" onClick={()=>addReview(apps.id)}>Review</button>
+              <button className="AccButton" onClick={()=>user(apps.volunteerId)}><i className="fa-solid fa-user"></i></button>
+              <button className="DelButton" onClick={()=>deleteVolunteer(apps.id)}><i className="fa-solid fa-trash-can"></i></button>
            
               </div>
               }
@@ -286,7 +306,7 @@ export default function SideeBar() {
              
                 action:<div>
                 <button className="AccButton" onClick={()=>updateOpp(opp.id)} >update</button>
-                <button className="DelButton" onClick={()=>deleteOpp(opp.id)} >Delete</button>
+                <button className="DelButton" onClick={()=>deleteOpp(opp.id)} ><i className="fa-solid fa-trash-can"></i></button>
                 </div>
               }
             ))}
@@ -325,7 +345,7 @@ export default function SideeBar() {
           <div className="contactInfo">
 
             <ul >
-              <li className="about" > <h2>About : </h2>{organization.mission}</li>
+              <li className="about" > <h2>Mission : </h2>{organization.mission}</li>
               <h2 style={{ color: 'rgb(210, 210, 210)' }}>organization ID : </h2>
               <li> {organization.organizationId}</li>
               <li><h2> Email : </h2> {organization.email}</li>
@@ -336,8 +356,8 @@ export default function SideeBar() {
               <li><h2>Bank Account : </h2> {organization.bankAccount}</li>
             </ul>
           </div>
-          <a className="ourC" href="#" onClick={()=>isVolunteer(organization.organizationId)}>Our volunteers</a>
-          <a className="ourC" href="#" onClick={()=>{isOppurtunity(organization.organizationId)}}>Our Opportunites</a>
+          <a className="ourC" href="#" onClick={()=>isVolunteer(organization.organizationId)}>volunteers</a>
+          <a className="ourC" href="#" onClick={()=>{isOppurtunity(organization.organizationId)}}>Opportunites</a>
           <a href="#" className="ourC" onClick={()=>newOpp(organization.organizationId)} >Add a new Opportunite</a>
          
         </div>) : (

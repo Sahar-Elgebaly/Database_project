@@ -6,17 +6,16 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import BASE_URL from '../config';
 
 export default function ReviewOpp() {
-    const { appId, vId, orgId } = useParams();
+    const { appId } = useParams();
     const navigate = useNavigate();
     const schema = Yup.object().shape({
         applicationId: Yup.number().required('Application ID is required'),
-        volunteerId: Yup.string().required('Volunteer ID is required'),
-        organizationId: Yup.string().required('Organization ID is required'),
         rating: Yup.number()
             .min(0, 'Rating must be at least 0')
-            .max(5, 'Rating must be at most 10')
+            .max(5, 'Rating must be at most 5')
             .required('Rating is required'),
         comment: Yup.string().required('Comment is required'),
     });
@@ -24,8 +23,6 @@ export default function ReviewOpp() {
         resolver: yupResolver(schema),
         defaultValues: {
             applicationId: appId,
-            volunteerId: vId,
-            organizationId: orgId,
 
         },
     });
@@ -37,7 +34,7 @@ export default function ReviewOpp() {
         
         try {
 
-            const response = await fetch("https://lfm2n4mh-7227.uks1.devtunnels.ms/api/Review", {
+            const response = await fetch(`${BASE_URL}/api/Review`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'text/plain'  },
                      body: JSON.stringify(payload),
@@ -62,13 +59,6 @@ export default function ReviewOpp() {
             <div className="container">
                 <form className="signV" onSubmit={handleSubmit(onSubmit)}>
                     <h1>Make a Review</h1>
-                    <label>Organization ID</label>
-                    <input
-                        type="text"
-                        name="organizationId"
-                        {...register('organizationId')}
-                    />
-                    {errors.organizationId && <div style={{ color: 'red' }}>{errors.organizationId.message}</div>}
                     <label>Application ID</label>
                     <input
                         type="number"
@@ -77,14 +67,6 @@ export default function ReviewOpp() {
                         {...register('applicationId')}
                     />
                     {errors.applicationId && <div style={{ color: 'red' }}>{errors.applicationId.message}</div>}
-                    <label >Volunteer ID</label>
-                    <input
-                        type="text"
-                        name="volunteerId"
-                        {...register('volunteerId')}
-                    />
-                    {errors.volunteerId && <div style={{ color: 'red' }}>{errors.volunteerId.message}</div>}
-
                     <input type="number" name="rating" {...register('rating')} placeholder='Rating 0/10' min='0' max='5' />
                      {errors.rating && <div style={{ color: 'red' }}>
                         {errors.rating.message}</div>}

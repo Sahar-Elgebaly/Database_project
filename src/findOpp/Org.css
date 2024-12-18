@@ -17,3 +17,7 @@
     flex-direction: column;
     padding: 20px;
 }
+.xxx{
+    max-width: 10%;
+    max-height: 10%;
+}
